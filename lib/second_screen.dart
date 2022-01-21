@@ -126,6 +126,20 @@ class _SecondScreenState extends State<SecondScreen> {
           'Stock List',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
+        actions: [
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, 'ThirdScreen');
+            },
+            child: Icon(
+              Icons.arrow_forward,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(
+            width: 16.0,
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(

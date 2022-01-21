@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sales_managing_app/second_screen.dart';
+import 'package:sales_managing_app/third_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +19,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.teal,
       ),
       home: SecondScreen(),
+      routes: {
+        'ThirdScreen': (context) => const ThirdScreen(),
+      },
     );
   }
 }
