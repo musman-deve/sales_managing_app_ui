@@ -263,6 +263,8 @@ class _SecondScreenState extends State<SecondScreen> {
               height: 15.0,
             ),
 
+            // Title Bar -------------------------------------------------------
+
             Container(
               padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 16.0),
               width: double.infinity,
