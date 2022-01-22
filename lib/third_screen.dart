@@ -113,141 +113,174 @@ class _ThirdScreenState extends State<ThirdScreen> {
               height: 20.0,
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 16.0),
-              height: 55.0,
-              color: Color(0xffF1F7F7),
-              child: Row(
+              height: MediaQuery.of(context).size.height / 1.5,
+              child: TabBarView(
                 children: [
-                  Expanded(
-                    child: Container(
-                      // width: 130.0,
-                      child: Text(
-                        'Date',
-                        textAlign: TextAlign.left,
-                        style: titleBarTextStyle,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      child: Text(
-                        'Payment',
-                        textAlign: TextAlign.center,
-                        style: titleBarTextStyle,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      child: Text(
-                        'Balance',
-                        textAlign: TextAlign.right,
-                        style: titleBarTextStyle,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // Table Data ------------------------------------------------------
-
-            Container(
-              height: MediaQuery.of(context).size.height / 2.3,
-              padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 0.0),
-              child: ListView.builder(
-                physics: BouncingScrollPhysics(),
-                itemCount: clientNames.length,
-                itemBuilder: (context, index) {
-                  return Column(
+                  Column(
                     children: [
-                      SizedBox(
-                        height: 00.0,
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 18.0, vertical: 16.0),
+                        height: 55.0,
+                        color: Color(0xffF1F7F7),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                // width: 130.0,
+                                child: Text(
+                                  'Date',
+                                  textAlign: TextAlign.left,
+                                  style: titleBarTextStyle,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                child: Text(
+                                  'Payment',
+                                  textAlign: TextAlign.center,
+                                  style: titleBarTextStyle,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                child: Text(
+                                  'Balance',
+                                  textAlign: TextAlign.right,
+                                  style: titleBarTextStyle,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      Row(
-                        children: [
-                          Container(
-                            width: 130.0,
-                            height: 60.0,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+
+                      // Table Data ------------------------------------------------------
+
+                      Container(
+                        height: MediaQuery.of(context).size.height / 2.3,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 18.0, vertical: 0.0),
+                        child: ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          itemCount: clientNames.length,
+                          itemBuilder: (context, index) {
+                            return Column(
                               children: [
-                                Text(
-                                  clientNames[index],
-                                  style: productTitleStyle,
-                                ),
                                 SizedBox(
-                                  height: 2.0,
+                                  height: 00.0,
                                 ),
-                                Text(
-                                  dates[index],
-                                  style: productTagLineStyle,
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 130.0,
+                                      height: 60.0,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            clientNames[index],
+                                            style: productTitleStyle,
+                                          ),
+                                          SizedBox(
+                                            height: 2.0,
+                                          ),
+                                          Text(
+                                            dates[index],
+                                            style: productTagLineStyle,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        height: 60.0,
+                                        child: Text(
+                                          payments[index],
+                                          style: productDataStyle,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        alignment: Alignment.centerRight,
+                                        height: 60.0,
+                                        child: Text(
+                                          '\$' +
+                                              balance[index].toStringAsFixed(2),
+                                          style: productDataStyle,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
-                            ),
+                            );
+                          },
+                        ),
+                      ),
+
+                      // Total -----------------------------------------------------------
+
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 0.5,
                           ),
-                          Expanded(
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 60.0,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 18.0, vertical: 16.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 130.0,
                               child: Text(
-                                payments[index],
-                                style: productDataStyle,
+                                'Total:',
+                                textAlign: TextAlign.left,
+                                style: titleBarTextStyle,
                               ),
                             ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              alignment: Alignment.centerRight,
-                              height: 60.0,
-                              child: Text(
-                                '\$' + balance[index].toStringAsFixed(2),
-                                style: productDataStyle,
+                            Expanded(
+                              child: Container(),
+                            ),
+                            Expanded(
+                              child: Container(
+                                child: Text(
+                                  '\$27325',
+                                  textAlign: TextAlign.right,
+                                  style: titleBarTextStyle,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
-                  );
-                },
-              ),
-            ),
+                  ),
 
-            // Total -----------------------------------------------------------
+                  // Paid Screen -----------------------------------------------
 
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.grey,
-                  width: 0.5,
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 16.0),
-              child: Row(
-                children: [
                   Container(
-                    width: 130.0,
-                    child: Text(
-                      'Total:',
-                      textAlign: TextAlign.left,
-                      style: titleBarTextStyle,
-                    ),
+                    alignment: Alignment.center,
+                    height: MediaQuery.of(context).size.height,
+                    child: Text('Paid Screen'),
                   ),
-                  Expanded(
-                    child: Container(),
-                  ),
-                  Expanded(
-                    child: Container(
-                      child: Text(
-                        '\$27325',
-                        textAlign: TextAlign.right,
-                        style: titleBarTextStyle,
-                      ),
-                    ),
+
+                  // Due Screen ------------------------------------------------
+
+                  Container(
+                    alignment: Alignment.center,
+                    height: MediaQuery.of(context).size.height,
+                    child: Text('Due Screen'),
                   ),
                 ],
               ),
