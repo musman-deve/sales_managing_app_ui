@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sales_managing_app/constants.dart';
+import 'package:sales_managing_app/fourth_screen.dart';
 
 class ThirdScreen extends StatefulWidget {
   const ThirdScreen({Key? key}) : super(key: key);
@@ -37,6 +38,34 @@ class _ThirdScreenState extends State<ThirdScreen> {
     375,
     375,
   ];
+  final List<double> dueBalance = [
+    175,
+    175,
+    175,
+    175,
+  ];
+  final List transectionTime = [
+    '09:50 AM',
+    '10:50 AM',
+    '09:50 AM',
+    '09:50 AM',
+    '09:50 AM',
+  ];
+  final List debit = [
+    140,
+    155,
+    130,
+    140,
+    155,
+  ];
+
+  final List credit = [
+    150,
+    175,
+    140,
+    150,
+    175,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +93,7 @@ class _ThirdScreenState extends State<ThirdScreen> {
           actions: [
             InkWell(
               onTap: () {
-                // Navigator.pushNamed(context, 'ThirdScreen');
+                Navigator.pushNamed(context, 'SixthScreen');
               },
               child: const Icon(
                 Icons.arrow_forward,
@@ -115,30 +144,48 @@ class _ThirdScreenState extends State<ThirdScreen> {
             Container(
               height: MediaQuery.of(context).size.height / 1.5,
               child: TabBarView(
+                physics: BouncingScrollPhysics(),
                 children: [
+                  SalesTable(
+                      clientNames: clientNames,
+                      dates: dates,
+                      payments: payments,
+                      balance: balance),
+
+                  // Paid Screen -----------------------------------------------
+
                   Column(
                     children: [
                       Container(
                         padding: EdgeInsets.symmetric(
                             horizontal: 18.0, vertical: 16.0),
+                        width: double.infinity,
                         height: 55.0,
                         color: Color(0xffF1F7F7),
                         child: Row(
                           children: [
+                            Container(
+                              width: 130.0,
+                              child: Text(
+                                'Description',
+                                textAlign: TextAlign.left,
+                                style: titleBarTextStyle,
+                              ),
+                            ),
                             Expanded(
                               child: Container(
-                                // width: 130.0,
                                 child: Text(
-                                  'Date',
-                                  textAlign: TextAlign.left,
+                                  'Debit',
+                                  textAlign: TextAlign.center,
                                   style: titleBarTextStyle,
                                 ),
                               ),
                             ),
                             Expanded(
                               child: Container(
+                                // padding: EdgeInsets.only(right: 20.0),
                                 child: Text(
-                                  'Payment',
+                                  'Credit',
                                   textAlign: TextAlign.center,
                                   style: titleBarTextStyle,
                                 ),
@@ -157,7 +204,7 @@ class _ThirdScreenState extends State<ThirdScreen> {
                         ),
                       ),
 
-                      // Table Data ------------------------------------------------------
+                      // Data Table --------------------------------------------------------
 
                       Container(
                         height: MediaQuery.of(context).size.height / 2.3,
@@ -188,10 +235,10 @@ class _ThirdScreenState extends State<ThirdScreen> {
                                             style: productTitleStyle,
                                           ),
                                           SizedBox(
-                                            height: 2.0,
+                                            height: 3.0,
                                           ),
                                           Text(
-                                            dates[index],
+                                            transectionTime[index],
                                             style: productTagLineStyle,
                                           ),
                                         ],
@@ -202,7 +249,17 @@ class _ThirdScreenState extends State<ThirdScreen> {
                                         alignment: Alignment.center,
                                         height: 60.0,
                                         child: Text(
-                                          payments[index],
+                                          '\$' + debit[index].toString(),
+                                          style: productDataStyle,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        height: 60.0,
+                                        child: Text(
+                                          '\$' + credit[index].toString(),
                                           style: productDataStyle,
                                         ),
                                       ),
@@ -244,20 +301,36 @@ class _ThirdScreenState extends State<ThirdScreen> {
                             Container(
                               width: 130.0,
                               child: Text(
-                                'Total:',
+                                'Total Balance:',
                                 textAlign: TextAlign.left,
-                                style: titleBarTextStyle,
+                                style: productDataStyle,
                               ),
-                            ),
-                            Expanded(
-                              child: Container(),
                             ),
                             Expanded(
                               child: Container(
                                 child: Text(
-                                  '\$27325',
+                                  '\$850',
+                                  textAlign: TextAlign.center,
+                                  style: productDataStyle,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                // padding: EdgeInsets.only(right: 20.0),
+                                child: Text(
+                                  '\$850',
+                                  textAlign: TextAlign.center,
+                                  style: productDataStyle,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                child: Text(
+                                  '\$4049',
                                   textAlign: TextAlign.right,
-                                  style: titleBarTextStyle,
+                                  style: productDataStyle,
                                 ),
                               ),
                             ),
@@ -267,27 +340,185 @@ class _ThirdScreenState extends State<ThirdScreen> {
                     ],
                   ),
 
-                  // Paid Screen -----------------------------------------------
-
-                  Container(
-                    alignment: Alignment.center,
-                    height: MediaQuery.of(context).size.height,
-                    child: Text('Paid Screen'),
-                  ),
-
                   // Due Screen ------------------------------------------------
 
-                  Container(
-                    alignment: Alignment.center,
-                    height: MediaQuery.of(context).size.height,
-                    child: Text('Due Screen'),
-                  ),
+                  DueTable(
+                      clientNames: clientNames,
+                      dates: dates,
+                      dueBalance: dueBalance,
+                      balance: balance),
                 ],
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class SalesTable extends StatelessWidget {
+  const SalesTable({
+    Key? key,
+    required this.clientNames,
+    required this.dates,
+    required this.payments,
+    required this.balance,
+  }) : super(key: key);
+
+  final List clientNames;
+  final List dates;
+  final List payments;
+  final List<double> balance;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 18.0,
+            vertical: 16.0,
+          ),
+          height: 55.0,
+          color: Color(0xffF1F7F7),
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  // width: 130.0,
+                  child: Text(
+                    'Date',
+                    textAlign: TextAlign.left,
+                    style: titleBarTextStyle,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  child: Text(
+                    'Payment',
+                    textAlign: TextAlign.center,
+                    style: titleBarTextStyle,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  child: Text(
+                    'Balance',
+                    textAlign: TextAlign.right,
+                    style: titleBarTextStyle,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // Table Data ------------------------------------------------------
+
+        Container(
+          height: MediaQuery.of(context).size.height / 2.3,
+          padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 0.0),
+          child: ListView.builder(
+            physics: BouncingScrollPhysics(),
+            itemCount: clientNames.length,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  SizedBox(
+                    height: 00.0,
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        width: 130.0,
+                        height: 60.0,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              clientNames[index],
+                              style: productTitleStyle,
+                            ),
+                            SizedBox(
+                              height: 2.0,
+                            ),
+                            Text(
+                              dates[index],
+                              style: productTagLineStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 60.0,
+                          child: Text(
+                            payments[index],
+                            style: productDataStyle,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.centerRight,
+                          height: 60.0,
+                          child: Text(
+                            '\$' + balance[index].toStringAsFixed(2),
+                            style: productDataStyle,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+
+        // Total -----------------------------------------------------------
+
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.grey,
+              width: 0.5,
+            ),
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 16.0),
+          child: Row(
+            children: [
+              Container(
+                width: 130.0,
+                child: Text(
+                  'Total:',
+                  textAlign: TextAlign.left,
+                  style: titleBarTextStyle,
+                ),
+              ),
+              Expanded(
+                child: Container(),
+              ),
+              Expanded(
+                child: Container(
+                  child: Text(
+                    '\$27325',
+                    textAlign: TextAlign.right,
+                    style: titleBarTextStyle,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
